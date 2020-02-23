@@ -1,0 +1,109 @@
+.title {
+    font-size: 25px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.invoiceItemTitle {
+    padding-left: 15px;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.mainElement {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+.formControl {
+    margin: 5px;
+    min-width: 250px;
+}
+
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 10px;
+    padding-bottom: 20px;
+}
+
+.nameField {
+    margin-left: 20px;
+    margin-right: 10px;
+    width: 300px;
+}
+
+.streetField {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 400px;
+}
+.cityField {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 300px;
+}
+.addressField {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100px;
+}
+.warrantyField {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 150px;
+}
+.codeField {
+    margin-left: 20px;
+    margin-right: 10px;
+    width: 200px;
+}
+.invoiceUserInfo {
+    float: left;
+    text-align: left;
+    padding-left: 20px;
+    width: 100%;
+}
+.orderRow {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.productRow {
+    margin-top: 40px;
+}
+.productRowDetails {
+    margin-top: 20px;
+}
+.invoiceDetails {
+    padding: 20px;
+    font-size: 13px;
+}
+.document {
+    min-height: 600px;
+}
+.confirmationMessage {
+    font-weight: 500;
+    font-size: 22px;
+}
+.confirmationButton {
+    cursor: pointer;
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 50px;
+    height: 80px;
+}
+.confirmationElement {
+    display: flex;
+    flex-direction: row;
+}
+.fabButtonEdit {
+    color: dodgerblue;
+    width: 50px;
+}
+.fabButtonConfirm {
+    color: green;
+    width: 50px;
+}
