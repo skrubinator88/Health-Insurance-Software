@@ -7,10 +7,7 @@ import Icon from '@material-ui/core/Icon';
 import Logout from "../Logout";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { SUPERUSER } from "../../Globals";
 import {Link} from "react-router-dom";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -36,15 +33,8 @@ const Header = (props) => {
         <div className={classes.root}>
             <AppBar position="static" color="primary">
                 <Toolbar>
-                    <img src="/logo.png" width="60px"/>
                     <div className={classes.spacer}/>
                     {props.auth.user.name}
-                    {props.auth.user.userRole === SUPERUSER ?
-                        <Link to='/dashboard/admin' className={classes.linkWrapper}>
-                            <IconButton color="inherit">
-                                <Icon className={classes.admin}>security</Icon>
-                            </IconButton>
-                        </Link> : null}
                     <Logout />
                 </Toolbar>
             </AppBar>

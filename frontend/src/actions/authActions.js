@@ -8,7 +8,6 @@ import {
 } from './types'
 import { returnErrors } from "./errorActions";
 import FetchService from "../services/fetchService";
-import PostService from "../services/postService";
 import {PostServiceModule} from "../App";
 
 export const loadUser = () => async (dispatch, getState) => {
@@ -62,6 +61,38 @@ export const login = ({username, password}) => async dispatch => {
             })
         }
     } catch(err) {
+        dispatch(returnErrors('An error has occurred', 400));
+        dispatch({
+            type: LOGIN_FAIL
+        })
+    }
+};
+
+export const register = (info, isProvider) => async dispatch => {
+    try {
+        let response;
+        if(!isProvider) return alert("Client registration is not set up");
+        else response = await PostServiceModule.postProvider(info);
+        if(response.status === 200) {
+            let data = await response.json();
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: data
+            })
+        } else if(response.status === 400) {
+            let error = await response.json();
+            dispatch(returnErrors(error.error, response.status));
+            dispatch({
+                type: LOGIN_FAIL
+            })
+        } else {
+            dispatch(returnErrors('An error occurred on the server', response.status))
+            dispatch({
+                type: LOGIN_FAIL
+            })
+        }
+    } catch(err) {
+        console.log(err);
         dispatch(returnErrors('An error has occurred', 400));
         dispatch({
             type: LOGIN_FAIL

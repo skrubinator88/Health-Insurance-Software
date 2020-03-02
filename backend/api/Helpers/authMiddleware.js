@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const env = process.env.NODE_ENV || 'development';
 const config = require('../../config/config_env')[env];
-const {getUserRole} = require('../users/userActions')
+const {getUserRole} = require('../Actions/authActions')
 function verifyToken(req, res, next) {
     let token = req.headers['x-access-token'];
     if (!token)
@@ -11,12 +11,6 @@ function verifyToken(req, res, next) {
             return res.status(403).send({ error: 'Failed to authenticate token.' });
         // if everything good, save to request for use in other routes
         req.userId = decoded.id;
-        try {
-            req.userRole = await getUserRole(decoded.id);
-        } catch(err) {
-            console.log(err)
-            return res.status(500).end();
-        }
         next();
     });
 }

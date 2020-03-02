@@ -4,13 +4,13 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const logger = require('morgan');
 const helmet = require('helmet');
-const rfs = require('rotating-file-stream');
 
-const patients = require('./api/patients/routes/index');
-const invoices = require('./api/invoices/routes/index');
-const documents = require('./api/documents/routes/index');
-const users = require('./api/users/routes/index');
-const seed = require('./seed/routes');
+const claims = require('./api/clients/routes/index');
+const clients = require('./api/invoices/routes/index');
+const healthPlans = require('./api/healthPlans/routes/index');
+const providers = require('./api/providers/routes/index');
+const invoices = require('./api/providers/routes/index');
+
 
 //import db
 const dbmain = require("./config/DB/DBmain");
@@ -20,13 +20,6 @@ const app = express();
 app.use(helmet());
 app.set('view engine', 'hbs');
 
-// create a rotating write stream
-// const logStream = rfs(`logfile-${new Date().toLocaleDateString()}.log`,{
-//     interval: '1d', // rotate daily
-//     size: "10M",
-//     path: path.join(__dirname, 'log'),
-//     compress: "gzip"
-// });
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -45,11 +38,11 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/patients', patients);
+app.use('/claims', claims);
+app.use('/clients', clients);
+app.use('/healthPlans', healthPlans);
 app.use('/invoices', invoices);
-app.use('/seed', seed);
-app.use('/documents', documents);
-app.use('/users', users);
+app.use('/providers', providers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

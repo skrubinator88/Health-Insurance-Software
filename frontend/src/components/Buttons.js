@@ -15,6 +15,11 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(3),
         float: 'right'
     },
+    registerButton: {
+        margin: theme.spacing(1),
+        marginTop: theme.spacing(3),
+        float: 'right'
+    },
     backButton: {
         margin: theme.spacing(1),
         float: 'left',
@@ -48,6 +53,21 @@ export const LoginButton = ({onClick}) => {
             onClick={onClick}
         >
             Login
+        </Button>
+    );
+};
+
+export const RegisterButton = ({onClick}) => {
+    const classes = useStyles();
+    return (
+        <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            className={classes.RegisterButton}
+            onClick={onClick}
+        >
+            Register
         </Button>
     );
 };

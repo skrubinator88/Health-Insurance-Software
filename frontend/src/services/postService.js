@@ -52,8 +52,8 @@ class PostService {
             else return resp
         })
     }
-    postPatient(info) {
-        return fetch(`${api}/patients/new`, {
+    postHealthPlan(info) {
+        return fetch(`${api}/healthPlans/`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -68,29 +68,18 @@ class PostService {
             else return resp
         })
     };
-    postUser(username, password, firstName, lastName, role) {
-        return fetch(`${api}/users/new`, {
+    postProvider(info) {
+        return fetch(`${api}/providers/new`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
-                'x-access-token': store.getState().auth.token
             },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-                firstName: firstName,
-                lastName: lastName,
-                role: role
-            })
-        }).then(resp => {
-            if(resp.status === 403) {
-                this.store.dispatch(this.logout())
-            }
-            else return resp
-        })
+            body: JSON.stringify(info)
+        }).then(resp => resp)
     };
-    loginUser(username, password) {
+
+    loginProvider(username, password) {
         return fetch(`${api}/users/login`, {
             method: "POST",
             headers: {
