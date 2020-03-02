@@ -1,0 +1,2 @@
+web: node backend/bin/www
+api: node frontend/server
