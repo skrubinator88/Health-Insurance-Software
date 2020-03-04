@@ -5,9 +5,10 @@ let config = {
             port: 3002
         },
         database: {
-            db_name: "health_insurance_test",
-            username: "emen",
-            password: "Oseriemen20",
+            db_name: "vfpneqky",
+            host: "drona.db.elephantsql.com",
+            username: "vfpneqky",
+            password: "0ermV8uOr4yCaDeQP--qedFVVFOkzJAb",
             dialect: "postgresql",
             pool: {
                 max: 100,
