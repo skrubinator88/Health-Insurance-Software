@@ -1,13 +1,13 @@
 # Health-Insurance-Software
 Software Engineering Class Project
 
-cd into backend
-npm install
-npm run dev
+cd into backend<br />
+npm install<br />
+npm run dev<br />
 
-In another terminal
-cd into frontend
-npm install
-npm run dev
+In another terminal<br />
+cd into frontend<br />
+npm install<br />
+npm run dev<br />
 
 
