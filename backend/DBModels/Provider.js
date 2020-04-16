@@ -5,6 +5,7 @@ const Sequelize = dbmain.Seq();
 module.exports = {
     model: {
         name: Sequelize.STRING,
+        username: Sequelize.STRING,
         providerId: {
             primaryKey: true,
             autoIncrement: true,

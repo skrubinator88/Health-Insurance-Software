@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import Dashboard from './routes/dashboard'
-import Login from './pages/Register'
+import Login from './pages/Login'
+import Register from './pages/Register'
 import { BrowserRouter as Router } from 'react-router-dom';
 import {Route, Switch} from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -27,6 +28,7 @@ function App() {
                 <div className="App">
                     <Switch>
                         <UnProtectedRoute path="/" exact component={Login}/>
+                        <UnProtectedRoute path="/register" exact component={Register}/>
                         <ProtectedRoute path="/dashboard" component={Dashboard}/>
                     </Switch>
                 </div>

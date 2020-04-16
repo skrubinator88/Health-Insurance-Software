@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
-    "@material-ui/icons": "^4.5.1"
+    "@material-ui/icons": "^4.5.1",
+    "react-test-renderer": "^16.13.1"
   }
 }

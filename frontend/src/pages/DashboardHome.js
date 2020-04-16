@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PatientListBox from '../components/dashboard/PatientListBox'
+import HealthPlanListBox from '../components/dashboard/HealthPlanListBox'
 import SearchBar from "../components/SearchBar";
 import Container from '@material-ui/core/Container';
 import debounce from 'lodash.debounce';
@@ -14,7 +14,7 @@ class DashboardHome extends Component {
         super(props);
         this.state = {
             error: '',
-            patients: [],
+            healthPlans: [],
             search: '',
             page: 1,
             hasMore: false,
@@ -24,33 +24,33 @@ class DashboardHome extends Component {
 
     componentDidMount = async () => {
         try {
-            await this.getPatients()
+            await this.getHealthPlans()
         } catch(err) {
             console.log(err)
         }
     };
 
-    searchPatients = debounce(async (search) => {
+    searchHealthPlans = debounce(async (search) => {
         try {
             this.setState({ search: search });
-            this.setState({ patients: [] });
+            this.setState({ healthPlans: [] });
             this.setState({ page: 1 });
-            await this.getPatients()
+            await this.getHealthPlans()
         } catch(err) {
             console.log(err)
         }
     }, 400);
 
-    getPatients = async (pageNo) => {
+    getHealthPlans = async (pageNo) => {
         try {
             this.setState({error: ''});
             this.setState({isFetching: true});
-            let response = await FetchServiceModule.fetchPatients(pageNo, this.state.search)
+            let response = await FetchServiceModule.fetchHealthPlans(pageNo, this.state.search);
             if(response.status === 200) {
                 let data = await response.json();
-                this.setState({ hasMore: this.state.patients.length < data.count });
-                let newPatients = [...this.state.patients].concat(data.rows);
-                this.setState({ patients: newPatients });
+                this.setState({ hasMore: this.state.healthPlans.length < data.count });
+                let newHealthPlans = [...this.state.healthPlans].concat(data.rows);
+                this.setState({ healthPlans: newHealthPlans });
             } else if(response.status === 400) {
                 let error = await response.json();
                 this.setState({error: error.error})
@@ -67,7 +67,7 @@ class DashboardHome extends Component {
     loadMore = async () => {
         this.setState({page: this.state.page + 1});
         try {
-            await this.getPatients(this.state.page)
+            await this.getHealthPlans(this.state.page)
         } catch(err) {
             console.log(err)
         }
@@ -76,11 +76,11 @@ class DashboardHome extends Component {
     render () {
         return (
             <Container maxWidth='md'>
-                <SearchBar label='Search Patients By Name' placeholder="John Doe, Janet Doe, etc." onChangeText={this.searchPatients}/>
+                <SearchBar label='Search Health Plans By Name' placeholder="Health Plan Name" onChangeText={this.searchHealthPlans}/>
                 {this.state.error ? <div>
                     <span className="error-text">{this.state.error}</span>
                 </div>: null}
-                <PatientListBox patients={this.state.patients} hasMore={this.state.hasMore} loadMorePatients={this.loadMore} isFetching={this.state.isFetching}/>
+                <HealthPlanListBox healthPlans={this.state.healthPlans} hasMore={this.state.hasMore} loadMore={this.loadMore} isFetching={this.state.isFetching}/>
             </Container>
         )
     }

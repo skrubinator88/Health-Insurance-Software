@@ -1,10 +1,10 @@
-const { getInvoiceById } = require('../Controllers/queries');
+const { getHealthPlan }     = require('../Controllers/queries');
 
 module.exports = async function (req, res, next) {
-    await getInvoiceById(req.params.invoiceId, function(err, invoice) {
+    await getHealthPlan(req.params.id, function(err, healthPlan) {
         if(err) {
             return next(err);
         }
-        res.status(200).send(invoice)
+        res.status(200).send(healthPlan)
     })
 };

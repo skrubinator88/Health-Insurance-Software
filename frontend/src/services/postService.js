@@ -80,7 +80,7 @@ class PostService {
     };
 
     loginProvider(username, password) {
-        return fetch(`${api}/users/login`, {
+        return fetch(`${api}/providers/login`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

@@ -8,8 +8,8 @@ class FetchService {
         this.store = store;
         this.logout = logoutAction;
     }
-    fetchPatient = (id) => {
-        return fetch(`${api}/patients/${id}`, {
+    fetchHealthPlan = (id) => {
+        return fetch(`${api}/healthPlans/${id}`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -23,8 +23,8 @@ class FetchService {
             else return resp
         })
     }
-    fetchPatients = (pageNo, search) => {
-        let url = `${api}/patients/?pageLimit=15`;
+    fetchHealthPlans = (pageNo, search) => {
+        let url = `${api}/providers/healthPlans?pageLimit=15`;
         let page = pageNo ? pageNo : 1;
         url = url + '&pageNo=' + page;
         if(search) url = url + '&search=' + search;
@@ -78,65 +78,6 @@ class FetchService {
                 else return resp
             })
     }
-    fetchInvoice = (id) => {
-        return fetch(`${api}/invoices/${id}`, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                'x-access-token': store.getState().auth.token
-            }
-        }).then(resp => {
-                if(resp.status === 403) {
-                    this.store.dispatch(this.logout())
-                }
-                else return resp
-            })
-    }
-    fetchDocument = (id) => {
-        return fetch(`${api}/documents/${id}`, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                'x-access-token': store.getState().auth.token
-            }
-        }).then(resp => {
-                if(resp.status === 403) {
-                    this.store.dispatch(this.logout())
-                }
-                else return resp
-            })
-    }
-    fetchUsers = (pageNo) => {
-        let url = `${api}/users/?pageLimit=15`;
-        let page = pageNo ? pageNo : 1;
-        url = url + '&pageNo=' + page;
-        return fetch(url, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                'x-access-token': store.getState().auth.token
-            }
-        }).then(resp => {
-            if(resp.status === 403) {
-                this.store.dispatch(this.logout())
-            }
-            else return resp
-        })
-    };
-    static fetchUser(userId, token) {
-        let url = `${api}/users/${userId}`;
-        return fetch(url, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                'x-access-token': token
-            }
-        }).then(async resp => [resp.status, await resp.json()])
-    };
 }
 
 export default FetchService;

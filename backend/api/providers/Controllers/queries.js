@@ -28,6 +28,21 @@ module.exports = {
             return cb(err);
         }
     },
+    async getHealthPlans (pageNo, pageLimit, query, cb) {
+        const HealthPlan = dbmain.model('HealthPlan');
+        let options = {
+            where: query,
+            limit: pageLimit,
+            offset: pageNo
+        };
+        try{
+            let healthPlans = await HealthPlan.findAndCountAll(options);
+            console.log(healthPlans);
+            return cb(null,healthPlans);
+        } catch(err) {
+            return cb(err);
+        }
+    },
     async getUserById (id, cb) {
         let User = dbmain.model('User');
         try{

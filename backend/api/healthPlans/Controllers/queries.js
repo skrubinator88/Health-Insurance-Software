@@ -27,15 +27,14 @@ module.exports = {
             cb(err);
         }
     },
-    async getInvoiceById (id, cb) {
-        let Invoice = dbmain.model('Invoice');
-        let Item = dbmain.model('Item');
+    async getHealthPlan (id, cb) {
+        let HealthPlan = dbmain.model('HealthPlan');
         try {
-            let invoice = await Invoice.findById(id);
-            let items = await Item.findAll({ where: { InvoiceId: id } });
-            cb(null, Object.assign({}, invoice.get(), {items: items}))
+            let healthPlan = await HealthPlan.findById(id);
+            cb(null, healthPlan)
         } catch(err) {
             console.error(err);
+            cb(err)
         }
     }
 };

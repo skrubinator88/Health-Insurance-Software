@@ -13,7 +13,8 @@ module.exports = {
             let user = await Provider.findOrCreate({
                 where: {
                     name: info.name,
-                    password: hashedPassword
+                    password: hashedPassword,
+                    username: info.username
                 },
                 defaults: {
                     telephone: info.telephone,
@@ -67,14 +68,14 @@ module.exports = {
     async loginProvider (info, cb) {
         const Provider = dbmain.model('Provider');
         try {
-            let user = await User.findOne({where: { username: info.username }});
-            if(!user) return cb(null, false, {message: 'Invalid username or password'});
+            let provider = await Provider.findOne({where: { username: info.username }});
+            if(!provider) return cb(null, false, {message: 'Invalid username or password'});
             //validate password
-            const match = await bcrypt.compare(info.password, user.password);
+            const match = await bcrypt.compare(info.password, provider.password);
             if(!match) return cb(null, false, {message: 'Invalid username or password'});
             return cb(null, {
-                id: user.id,
-                name: user.firstName + ' ' + user.lastName
+                id: provider.id,
+                name: provider.name
             });
         } catch (err) {
             console.error(err);

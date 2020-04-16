@@ -58,23 +58,23 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const PatientListBox = (props) => {
+const HealthPlanListBox = (props) => {
     const classes = useStyles();
     let myRef = useRef(null);
 
     const [hasMore, setHasMore] = useState(props.hasMore);
-    const [patients, setPatients] = useState(props.patients);
+    const [healthPlans, setHealthPlans] = useState(props.healthPlans);
 
     useEffect(() => {
         setHasMore(props.hasMore);
-        setPatients(props.patients);
+        setHealthPlans(props.healthPlans);
         document.addEventListener('wheel', handleScroll, { passive: true });
         document.addEventListener('scroll', handleScroll, { passive: true });
         return () => {
             document.removeEventListener('scroll', handleScroll);
             document.removeEventListener('wheel', handleScroll);
         };
-    }, [props.hasMore, props.patients]);
+    }, [props.hasMore, props.healthPlans]);
 
     const handleScroll = debounce(async (e) => {
         if (!hasMore) {
@@ -88,7 +88,7 @@ const PatientListBox = (props) => {
             let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
             if(scrolledToBottom) {
-                await props.loadMorePatients()
+                await props.loadMore()
             }
         }
     }, 150);
@@ -97,25 +97,24 @@ const PatientListBox = (props) => {
         <Box >
             <Container className={classes.container} maxWidth={'sm'} >
                 <Box ref={myRef} style={{maxHeight: 450, overflowY: 'scroll', border: '2px solid #DCDCDC', marginTop: 10, paddingBottom: 60}}>
-                    {patients.length > 0 ? patients.map((patient, index) => {
-                        return (
-                            <Link to={`/dashboard/patient/${patient.id}`} className={classes.linkWrapper}>
-                                <CustomerCard name={patient.name}
-                                              streetAddress1={patient.street1}
-                                              streetAddress2={patient.street2}
-                                              city={patient.city}
-                                              state={patient.state}
-                                              zipCode={patient.zipCode}
-                                              phone1={patient.telephone1}
-                                              phone2={patient.telephone2}
-                                />
-                            </Link>
-                        );
+                    {healthPlans.length > 0 ? healthPlans.map((healthPlan, index) => {
+                        if(healthPlan) {
+                            return (
+                                <Link to={`/dashboard/healthPlan/${healthPlan.id}`} className={classes.linkWrapper}>
+                                    <CustomerCard name={healthPlan.name}
+                                                  type={healthPlan.type}
+                                                  description={healthPlan.description}
+                                                  deductible={healthPlan.deductible}
+                                                  premium={healthPlan.premium}
+                                    />
+                                </Link>
+                            );
+                        }
                     }) : <Box>
-                        <h3>Patient name does not match any records</h3>
-                        <Link to='/dashboard/addUser' className={classes.linkWrapper}><Paper className={classes.addPatient}>
+                        <h3>No Health Plan could be found</h3>
+                        <Link to='/dashboard/addHealthPlan' className={classes.linkWrapper}><Paper className={classes.addPatient}>
                             <Typography variant={'h4'}>
-                                <Icon className={classes.addPatientIcon}>person_add</Icon> &nbsp; <span className={classes.addPatientText}>Add new patient</span>
+                                <Icon className={classes.addPatientIcon}>person_add</Icon> &nbsp; <span className={classes.addPatientText}>Add new health plan</span>
                             </Typography>
                         </Paper></Link>
                     </Box> }
@@ -129,7 +128,7 @@ const PatientListBox = (props) => {
     );
 };
 
-const CustomerCard = ({ name, code, streetAddress1, streetAddress2, city, state, zipCode, phone1, phone2}) => {
+const CustomerCard = ({ name, type, deductible, description, premium}) => {
     const classes = useStyles();
 
     return (
@@ -142,15 +141,14 @@ const CustomerCard = ({ name, code, streetAddress1, streetAddress2, city, state,
                 <div className={classes.cardContents}>
                     <div>
                        <p>
-                           <b>Address1:</b> {streetAddress1 ? streetAddress1 : "N/A"} <br/>
-                           <b>Address2:</b> {streetAddress2 ? streetAddress2 : "N/A"}<br/>
+                           <b>Type:</b> {type ? type : "N/A"} <br/>
+                           <b>Deductible:</b> {deductible ? deductible : "N/A"}<br/>
+                           <b>Description:</b> {description ? description : "N/A"}<br/>
                        </p>
                     </div>
                     <div>
                         <p>
-                            <b>City:</b> {city ? city : "N/A"} <br/> <b>State:</b> {state ? state : "N/A"} <br/> <b>ZipCode:</b> {zipCode ? zipCode : "N/A"} <br/>
-                            <b>Telephone:</b> {phone1 ? phone1 : "N/A"}<br/>
-                            <b>Telephone 2:</b> {phone2 ? phone2 : "N/A"}
+                            <b>Premium:</b> {premium ? premium : "N/A"}<br/>
                         </p>
                     </div>
                 </div>
@@ -159,4 +157,4 @@ const CustomerCard = ({ name, code, streetAddress1, streetAddress2, city, state,
     );
 };
 
-export default PatientListBox;
+export default HealthPlanListBox;

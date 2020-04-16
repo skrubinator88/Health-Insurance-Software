@@ -5,16 +5,16 @@ import Fab from "@material-ui/core/Fab";
 import Icon from "@material-ui/core/Icon";
 import Box from "@material-ui/core/Box";
 import Dialog from "@material-ui/core/Dialog";
-import UpdatePatient from "./UpdatePatient/UpdatePatient";
+import UpdateHealthPlan from "./UpdateHealthPlan/UpdateHealthPlan";
 
 const useStyles = makeStyles(theme => ({
-    patientName: {
+    healthPlanName: {
         fontSize: 32,
         fontWeight: 500,
         padding: theme.spacing(2, 2, 0),
         textAlign: 'left'
     },
-    patientDetails: {
+    healthPlanDetails: {
         textAlign: 'left',
         fontSize: 16,
         padding: theme.spacing(2)
@@ -33,7 +33,7 @@ const EditButton = ({onClick}) => {
     )
 }
 
-const PatientCard = ({patient, getPatient}) => {
+const HealthPlanCard = ({healthPlan, getHealthPlan}) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
@@ -41,37 +41,28 @@ const PatientCard = ({patient, getPatient}) => {
     };
     const handleClose = async () => {
         setOpen(false);
-        await getPatient(patient.id)
+        await getHealthPlan(healthPlan.id)
     };
     return (
             <Paper elevation={2}>
                 <Dialog aria-labelledby="customized-dialog-title" open={open}>
                     <Box>
-                        <UpdatePatient patientId={patient.id} close={handleClose}/>
+                        <UpdateHealthPlan healthPlanId={healthPlan.id} close={handleClose}/>
                     </Box>
                 </Dialog>
-                <span className={classes.patientName}>{patient.name}</span>
-                <p className={classes.patientDetails}>
-                    <b>Address</b>: {patient.street1 ? patient.street1 : "N/A"}
+                <span className={classes.healthPlanName}>{healthPlan.name}</span>
+                <p className={classes.healthPlanDetails}>
+                    <b>Type</b>: {healthPlan.type},
                     <br/>
-                    <b>Phone</b>: {patient.telephone1 ? patient.telephone1 : "N/A"}
+                    <b>Deductible</b>: {healthPlan.deductible},
                     <br/>
-                    <b>Sex</b>: {patient.sex ? patient.sex : "N/A"}
+                    <b>Description</b>: {healthPlan.description},
                     <br/>
-                    <b>Date of Birth</b>: {!!patient.birthdate ? new Date(patient.birthdate).toLocaleDateString("en-US") : "N/A"}
-                    <br/>
-                    <b>Height</b>: {patient.height ? patient.height : "N/A"}
-                    <br/>
-                    <b>Weight</b>: {patient.weight ? patient.weight : "N/A"}
-                    <br/>
-                    <br/>
-                    <b>Insurance Type</b>: {patient.insuranceType ? patient.insuranceType.toUpperCase() : "N/A"}
-                    <br/>
-                    <b>Insurance #</b>: {patient.insuranceNo ? patient.insuranceNo : "N/A"}
+                    <b>Premium</b>: {healthPlan.premium},
                 </p>
                 <EditButton onClick={handleClickOpen}/>
             </Paper>
     );
 };
 
-export default PatientCard;
+export default HealthPlanCard;

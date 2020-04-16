@@ -39,9 +39,9 @@ export const loadUser = () => async (dispatch, getState) => {
     }
 };
 
-export const login = ({username, password}) => async dispatch => {
+export const login = ({username, password}, isProvider) => async dispatch => {
     try {
-        let response = await PostServiceModule.loginUser(username, password);
+        let response = await PostServiceModule.loginProvider(username, password);
         if(response.status === 200) {
             let data = await response.json();
             dispatch({

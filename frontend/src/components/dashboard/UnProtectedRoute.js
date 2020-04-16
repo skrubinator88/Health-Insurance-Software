@@ -11,7 +11,7 @@ const UnProtectedRoute = ({ component: Component, isAuthenticated, ...rest }) =>
                  <Component {...props}/> :
              <Redirect to={
                 {
-                    pathname: "/dashboard/addHealthPlan",
+                    pathname: "/dashboard",
                     state: {
                         from: props.location
                     }

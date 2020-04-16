@@ -28,8 +28,8 @@ class UpdateService {
             else return resp
         })
     };
-    updatePatient(patientId, body) {
-        return fetch(`${api}/patients/${patientId}`, {
+    updateHealthPlan(healthPlanId, body) {
+        return fetch(`${api}/healthPlans/${healthPlanId}`, {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json',
